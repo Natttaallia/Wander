@@ -43,8 +43,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val home = LatLng(47.12636687259162, 37.64587284038706)
         mMap.addMarker(MarkerOptions().position(home).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoomLevel))
+        setPoiClick(mMap)
         setMapLongClick(mMap)
     }
+
+    private fun setPoiClick(map: GoogleMap) {
+        map.setOnPoiClickListener { poi ->
+            val poiMarker = map.addMarker(
+                MarkerOptions()
+                    .position(poi.latLng)
+                    .title(poi.name)
+            )
+            poiMarker.showInfoWindow()
+        }
+    }
+
 
     private fun setMapLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
